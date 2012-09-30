@@ -10,29 +10,19 @@ class PowerupType:
 class Block:
     def __init__(self, btype=BlockType.blank, powerup=None, bomb = False):
         self.btype = btype
-        self.powerup = powerup
-        self.bomb = bomb
     def is_walkable(self):
         return self.btype != BlockType.wall
     def is_destroyable(self):
         return self.btype == BlockType.wall
     def is_bomb_passable(self):
         return self.btype == BlockType.blank
-    def powerup(self):
-        return self.powerup
+
     def destroy(self):
         if self.isDestroyable():
             self.btype = BlockType.blank
-            self.powerup = None
             return True
         else:
             return False
-    def add_bomb(self):
-        self.bomb = True
-    def remove_bomb(self):
-        self.bomb = False
-    def contains_bomb(self):
-        return self.bomb
 
 blockW, blockH = 32, 32
 mapW, mapH = 20, 20
@@ -47,3 +37,13 @@ def get_object(pos):
 
 def get_block(pos):
     return map[pos[0]][pos[1]]
+
+def can_move(new_position):
+    if not get_block(new_position).is_walkable():
+        return False
+    else:
+        obj = get_object(new_position)
+        if obj and (not isinstance(obj, Powerup)):
+            return False
+        else:
+            return True
