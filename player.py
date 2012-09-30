@@ -1,14 +1,3 @@
-def can_move(new_position):
-    if not get_block(new_position).is_walkable():
-        return False
-    else:
-        obj = get_object(new_position)
-        if obj and (not isinstance(obj, Powerup)):
-            return False
-        else:
-            return True
-
-
 
 class Player:
     def __init__(self, position, isComputer = False , max_bombs = 1, power = 1):
