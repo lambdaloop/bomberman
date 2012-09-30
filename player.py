@@ -52,5 +52,5 @@ class Player:
             players.remove(self)
         if not self.computer:
             num_humans -= 1
-        if num_humans == 0:
-            gameOver()
+        if num_humans <= 0:
+            game_over()

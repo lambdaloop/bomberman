@@ -39,3 +39,10 @@ powerups = []
 players = []
 
 num_humans = 0
+
+mainLoop = True
+
+def game_over():
+    global mainLoop
+    mainLoop = False
+    print("game over!")
