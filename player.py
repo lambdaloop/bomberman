@@ -34,7 +34,9 @@ class Player:
             set_object(new_position, self)
 
     def use_powerup(obj):
-        pass
+        if obj.type = 1:
+            powerup_bomb()
+        else powerup_power()
 
     def drop_bomb(self):
         if (self.bombinv > 0):
