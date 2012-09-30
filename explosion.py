@@ -44,9 +44,9 @@ class Explosion:
 			else 
 				if get_block(new_position).is_destroyable():
 					get_block(new_position).destroy()
-				elif get_obj(new_position) != None:
+				if get_obj(new_position) != None:
 					set_object(new_position, None)
-				elif get_player(new_position):
+				if get_player(new_position):
 					players.remove(get_player(new_position))
 				return final
 
