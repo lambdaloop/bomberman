@@ -39,11 +39,6 @@ def update_stuff(t):
     update_bombs(t)
     update_explosions(t)
 
-mainLoop = True
-
-def gameOver():
-    global mainLoop
-    mainLoop = False
 
 while mainLoop:
     tickFPS = Clock.tick(fps)

@@ -1,5 +1,3 @@
-
-
 class Direction:
     up, down, left, right = range(4)
 
