@@ -1,6 +1,6 @@
 class Explosion:
 
-	def _init_(self, power, position):
+	def __init__(self, power, position):
 		self.power = power
 		self.position = position
 		self.timeleft = 1000
