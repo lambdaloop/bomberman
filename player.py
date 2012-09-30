@@ -24,16 +24,20 @@ class Player:
         if can_move(new_position):
             self.position = new_position
 
-    def add_power(self, num):
-        self.power += num
-
-    def add_bomb(self, num):
-        self.max_bombs += num
-        self.bombinv += num
-
     def drop_bomb(self):
         if (self.bombinv > 0):
             b = Bomb(power, position)
             map[position[0],position[1]].add_bomb()
             bombs.append(b)
-            self.bombinv = bombinv - 1
+            self.bombinv = self.bombinv - 1
+
+    def recharge_bomb(self, num = 1):
+        if self.bombinv + num <= max_bombs:
+            self.bombinv = self.bombinv + num
+
+    def powerup_power(self, num = 1):
+        self.power += num
+
+    def powerup_bomb(self, num = 1):
+        self.max_bombs += num
+        self.bombinv += num

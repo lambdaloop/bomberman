@@ -22,6 +22,7 @@ key_to_dir = {pygame.constants.K_UP: Direction.up};
 
 bombs = []
 
+
 def handle_input(key):
     if not key:
         return
