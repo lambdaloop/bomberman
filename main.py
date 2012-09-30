@@ -19,7 +19,12 @@ fps = 60
 
 main_player = Player([1,1])
 
-key_to_dir = {pygame.constants.K_UP: Direction.up};
+key_to_dir = {
+    pygame.constants.K_UP: Direction.up,
+    pygame.constants.K_DOWN: Direction.down,
+    pygame.constants.K_LEFT: Direction.left,
+    pygame.constants.K_RIGHT: Direction.right
+};
 
 bombs = []
 explosion = []
