@@ -41,7 +41,7 @@ key1_dvorak_to_dir = {
     pygame.constants.K_e: Direction.right
 };
 
-key1_to_dir = key1_dvorak_to_dir
+key1_to_dir = key1_us_to_dir
 
 key2_to_dir = {
     pygame.constants.K_UP: Direction.up,
