@@ -25,8 +25,22 @@ class Block:
             return False
 
 blockW, blockH = 32, 32
-mapW, mapH = 20, 20
-map = [[Block() for x in range(mapW)] for y in range(mapH)]
+mapW, mapH = 15, 13
+test = True
+
+if test:
+    map = [[Block() for x in range(mapW)] for y in range(mapH)]
+else:
+    textfile = open("map.txt", "rt")
+    key = {'w' : BlockType.wall, ' ' : BlockType.blank, '-' : BlockType.brick}
+    map = [][]
+    for i in range(mapH):
+        line = textfile.readline()
+        for j in range(mapW):
+            map[j][i] = Block(line[j])
+
+    text.file.close()
+
 map_objects = [[None for x in range(mapW)] for y in range(mapH)]
 
 def set_object(pos, obj):
@@ -50,6 +64,8 @@ def can_move(new_position):
     else:
         obj = get_object(new_position)
         if obj and (not isinstance(obj, Powerup)):
+            return False
+        elif get_player(new_position):
             return False
         else:
             return True
