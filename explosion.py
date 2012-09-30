@@ -1,3 +1,6 @@
+from bomber_constants import *
+from bombermap import *
+
 class Explosion:
 
 	def __init__(self, power, position):
