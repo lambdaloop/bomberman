@@ -9,7 +9,10 @@ class BlockType:
 class PowerupType:
     extraBomb, speed, bombPower = range(3)
 
-size = width, height = 800, 600
+blockW, blockH = 32, 32
+mapW, mapH = 15,13
+
+size = width, height = blockW*mapW, blockH*mapH
 speed = [4, 4]
 black = 0, 0, 0
 

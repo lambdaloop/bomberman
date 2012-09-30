@@ -8,7 +8,7 @@ class Block:
     def is_walkable(self):
         return self.btype != BlockType.wall and self.btype != BlockType.brick
     def is_destroyable(self):
-        return self.btype == BlockType.wall
+        return self.btype == BlockType.brick
     def is_bomb_passable(self):
         return self.btype == BlockType.blank
 
@@ -20,15 +20,16 @@ class Block:
             return False
 
 blockW, blockH = 32, 32
-mapW, mapH = 15, 13
-test = False
+mapW, mapH = 15,13
+test = True
 
 if test:
-    map = [[Block() for x in range(mapW)] for y in range(mapH)]
+    map = [[Block() for x in range(mapH)] for y in range(mapW)]
+    map[2][2].btype = BlockType.wall
 else:
     textfile = open("map.txt", "rt")
     key = {'w' : BlockType.wall, ' ' : BlockType.blank, '-' : BlockType.brick}
-    map = [[None for x in range(mapW)] for y in range(mapH)]
+    map = [[None for x in range(mapH)] for y in range(mapW)]
     for i in range(mapH):
         line = textfile.readline()
         for j in range(mapW):
@@ -36,9 +37,7 @@ else:
 
     text.file.close()
 
-map_objects = [[None for x in range(mapW)] for y in range(mapH)]
-
-map[2][2].btype = BlockType.wall
+map_objects = [[None for x in range(mapH)] for y in range(mapW)]
 
 def set_object(pos, obj):
     map_objects[pos[0]][pos[1]] = obj
