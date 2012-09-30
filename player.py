@@ -1,7 +1,6 @@
 def can_move(new_position):
     return gameboard[new_position[0]][new_position[1]].is_walkable()
 
-
 class Player:
     def __init__(self, position, isComputer = False , max_bombs = 1, power = 1):
         self.computer = isComputer
@@ -21,8 +20,12 @@ class Player:
             new_position[1] -= 1
         elif dir == Direction.down:
             new_position[1] += 1
+
         if can_move(new_position):
+            if isinstance(get_object(self.position), Player):
+                set_object(self.position, None)
             self.position = new_position
+            set_object(new_position, self)
 
     def add_power(self, num):
         self.power += num
@@ -37,3 +40,5 @@ class Player:
             map[position[0],position[1]].add_bomb()
             bombs.append(b)
             self.bombinv = bombinv - 1
+
+            set_object(self.position, b)
