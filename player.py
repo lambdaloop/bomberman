@@ -29,7 +29,7 @@ class Player:
 
     def drop_bomb(self):
         if (self.bombinv > 0):
-            b = Bomb(self.power, self.position)
+            b = Bomb(self.power, self.position, self)
 #            get_block(self.position).add_bomb()
             bombs.append(b)
 
@@ -37,7 +37,7 @@ class Player:
             set_object(self.position, b)
 
     def recharge_bomb(self, num = 1):
-        if self.bombinv + num <= max_bombs:
+        if self.bombinv + num <= self.max_bombs:
             self.bombinv = self.bombinv + num
 
     def powerup_power(self, num = 1):

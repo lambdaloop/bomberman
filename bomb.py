@@ -3,10 +3,11 @@ from bombermap import *
 from explosion import *
 
 class Bomb:
-        def __init__(self, power, position):
+        def __init__(self, power, position, player):
                 self.power = power
                 self.position = position
                 self.timeleft = 3000
+                self.player = player
 
         def update(self, timelapsed):
                 self.timeleft -= timelapsed
@@ -15,7 +16,10 @@ class Bomb:
 
         def explode(self):
                 explosions.append(Explosion(self.power, self.position))
+                self.player.recharge_bomb()
                 self.remove()
 
         def remove(self):
-                explosions.remove(self)
+                bombs.remove(self)
+                if(get_object(self.position) == self):
+                        set_object(self.position, None)
