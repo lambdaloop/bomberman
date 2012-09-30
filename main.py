@@ -27,6 +27,7 @@ players = [main_player]
 
 standard_rect = pygame.Rect(0, 0, blockW, blockH)
 
+
 def handle_input(key):
     if not key:
         return
