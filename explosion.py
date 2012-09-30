@@ -16,6 +16,10 @@ class Explosion:
         for pos in self.exploded_positions:
             bombermap.set_object(pos, self)
 
+        if bombermap.get_player(self.position):
+            bombermap.get_player(self.position).die()
+
+
     def update(self, timelapsed):
         self.timeleft -= timelapsed
         if self.timeleft < 0:
@@ -50,7 +54,6 @@ class Explosion:
                         if bombermap.get_block(new_position).is_destroyable():
                             bombermap.get_block(new_position).destroy()
                             if random.random() < powerup_proportion:
-                                print("powerup at ", new_position)
                                 p = random_powerup(new_position)
                                 powerups.append(p)
                                 bombermap.set_object(new_position, p)
@@ -59,5 +62,4 @@ class Explosion:
                             final.append(list(new_position))
                             bombermap.get_player(new_position).die()
                         break
-        print(final)
         return final

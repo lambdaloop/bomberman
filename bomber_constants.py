@@ -27,12 +27,21 @@ fps = 60
 
 main_player = None
 
-key1_to_dir = {
+key1_us_to_dir = {
     pygame.constants.K_w: Direction.up,
     pygame.constants.K_s: Direction.down,
     pygame.constants.K_a: Direction.left,
     pygame.constants.K_d: Direction.right
 };
+
+key1_dvorak_to_dir = {
+    pygame.constants.K_COMMA: Direction.up,
+    pygame.constants.K_o: Direction.down,
+    pygame.constants.K_a: Direction.left,
+    pygame.constants.K_e: Direction.right
+};
+
+key1_to_dir = key1_dvorak_to_dir
 
 key2_to_dir = {
     pygame.constants.K_UP: Direction.up,

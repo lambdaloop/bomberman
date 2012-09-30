@@ -72,7 +72,7 @@ def draw_stuff():
     screen.fill(white)
     draw_map()
     draw_powerups()
-    draw_players()
     draw_bombs()
+    draw_players()
     draw_explosions()
     pygame.display.flip()

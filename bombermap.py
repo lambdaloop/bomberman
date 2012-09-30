@@ -1,3 +1,8 @@
+from bomber_constants import *
+from powerup import *
+import explosion
+import copy
+
 class Direction:
     up, down, left, right = range(4)
 
@@ -6,11 +11,6 @@ class BlockType:
 
 class PowerupType:
     extraBomb, speed, bombPower = range(3)
-
-from bomber_constants import *
-from powerup import *
-import explosion
-
 
 class Block:
     def __init__(self, btype=BlockType.blank, powerup=None, bomb = False):
@@ -34,19 +34,24 @@ test = False
 
 if test:
     map = [[Block() for x in range(mapH)] for y in range(mapW)]
+    startmap =  [[Block() for x in range(mapH)] for y in range(mapW)]
     map[2][2].btype = BlockType.wall
 else:
     textfile = open("map.txt", "rt")
     key = {'w' : BlockType.wall, ' ' : BlockType.blank, '-' : BlockType.brick}
     map = [[None for x in range(mapH)] for y in range(mapW)]
+    startmap =  [[None for x in range(mapH)] for y in range(mapW)]
     for i in range(mapH):
         line = textfile.readline()
         for j in range(mapW):
             map[j][i] = Block(key.get(line[j], BlockType.blank))
+            startmap[j][i] = Block(key.get(line[j], BlockType.blank))
 
     textfile.close()
 
 map_objects = [[None for x in range(mapH)] for y in range(mapW)]
+
+
 
 def set_object(pos, obj):
     map_objects[pos[0]][pos[1]] = obj

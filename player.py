@@ -11,6 +11,13 @@ class Player:
         self.max_bombs = max_bombs
         self.power = power
         self.bombinv = max_bombs
+        self.alive = True
+
+    def reset(self):
+        self.max_bombs = 1
+        self.power = 1
+        self.bombinv = self.max_bombs
+        self.alive = True
 
     def move(self, dir):
         new_position = list(self.position)
@@ -63,6 +70,7 @@ class Player:
         self.bombinv += num
 
     def die(self):
+        self.alive = False
         global num_humans
         if self in players:
             players.remove(self)
