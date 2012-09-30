@@ -1,5 +1,13 @@
 import pygame
-from bombermap import *
+
+class Direction:
+    up, down, left, right = range(4)
+
+class BlockType:
+    blank, wall, brick = range(3)
+
+class PowerupType:
+    extraBomb, speed, bombPower = range(3)
 
 size = width, height = 800, 600
 speed = [4, 4]
@@ -24,5 +32,7 @@ key_to_dir = {
 
 bombs = []
 explosions = []
-players = []
 powerups = []
+players = []
+
+num_humans = 0

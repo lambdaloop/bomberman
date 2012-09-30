@@ -6,7 +6,7 @@ class Bomb:
         def __init__(self, power, position, player):
                 self.power = power
                 self.position = position
-                self.timeleft = 3000
+                self.timeleft = 2000
                 self.player = player
 
         def update(self, timelapsed):
