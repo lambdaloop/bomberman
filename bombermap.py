@@ -13,7 +13,7 @@ class Block:
         self.powerup = powerup
         self.bomb = bomb
     def is_walkable(self):
-        return self.btype != BlockType.wall
+        return self.btype != (BlockType.wall and BlockType.brick)
     def is_destroyable(self):
         return self.btype == BlockType.wall
     def is_bomb_passable(self):

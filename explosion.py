@@ -25,7 +25,7 @@ class Explosion:
 			if can_move(new_position):
 				final.append(new_position)
 				flame = new_position
-			elif map[new_position[0], new_position[1]].is_destroyable():
+			elif get_block(new_position).is_destroyable():
 				map[new_position[0], new_position[1]].destroy()
 				return final
 			else
