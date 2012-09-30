@@ -64,9 +64,9 @@ while 1:
             pressed=event.key
 
     handle_input(pressed)
-        handle_AI()
-        update_stuff()
-        draw_stuff()
+    handle_AI()
+    update_stuff()
+    draw_stuff()
 
     # ballrect = ballrect.move(speed)
         # if ballrect.left < 0 or ballrect.right > width:
