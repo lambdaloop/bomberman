@@ -19,9 +19,8 @@ class Block:
         else:
             return False
 
-blockW, blockH = 32, 32
-mapW, mapH = 15,13
-test = True
+
+test = False
 
 if test:
     map = [[Block() for x in range(mapH)] for y in range(mapW)]
@@ -33,9 +32,9 @@ else:
     for i in range(mapH):
         line = textfile.readline()
         for j in range(mapW):
-            map[j][i] = Block(line[j])
+            map[j][i] = Block(key.get(line[j], BlockType.blank))
 
-    text.file.close()
+    textfile.close()
 
 map_objects = [[None for x in range(mapH)] for y in range(mapW)]
 

@@ -11,6 +11,7 @@ for i in range(1, len(block_images)):
     block_images[i] = pygame.image.load(block_images[i])
 
 
+
 standard_rect = pygame.Rect(0, 0, blockW, blockH)
 
 def pos_to_pixel(pos):
