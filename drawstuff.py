@@ -1,4 +1,6 @@
 import pygame
+from bomber_constants import *
+from bombermap import *
 
 player_image = pygame.image.load('img/player.png')
 block_images = []
@@ -16,30 +18,33 @@ def get_rect(pos):
     return rect
 
 def draw_player(p):
-    rect = get_rect(b.position))
-    pygame.blit(player_image, rect)
+    rect = get_rect(p.position)
+    screen.blit(player_image, rect)
 
 def draw_block(b, pos):
     if b.btype == BlockType.blank:
         return
     rect = get_rect(pos)
     img = block_images[b.btype]
-    pygame.blit(img, rect)
+    screen.blit(img, rect)
 
 def draw_bomb(b):
     rect = get_rect(b.position)
-    pygame.blit(bomb_image, rect)
+    screen.blit(bomb_image, rect)
 
 def draw_map():
     for x in range(mapW):
         for y in range(mapH):
-            draw_block(map[x][y])
+            draw_block(map[x][y], [x,y])
 
 def draw_explosion(e):
     positions = e.exploded_positions
     for p in positions:
         rect = get_rect(p)
-        pygame.blit(explosion_image, rect)
+        screen.blit(explosion_image, rect)
+
+def draw_powerup(p):
+    pass
 
 def draw_list_function(func, l):
     def f():
@@ -52,7 +57,10 @@ draw_players = draw_list_function(draw_player, players)
 draw_explosions = draw_list_function(draw_explosion, explosions)
 draw_powerups = draw_list_function(draw_powerup, powerups)
 
+white = 255,255,255
+
 def draw_stuff():
+    screen.fill(white)
     draw_map()
     draw_players()
     draw_bombs()

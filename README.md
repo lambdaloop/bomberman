@@ -1,1 +1,0 @@
-Bomberman blah blah blah

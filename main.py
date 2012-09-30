@@ -1,47 +1,25 @@
 import sys, pygame
 import spritesheet
-import bombermap
-import drawstuff
+from bomber_constants import *
+from bombermap import *
+from drawstuff import *
+from player import *
 
 pygame.init()
 
-size = width, height = 800, 600
-speed = [4, 4]
-black = 0, 0, 0
-
-screen = pygame.display.set_mode(size)
-
-ball = pygame.image.load("ball.gif")
-ballrect = ball.get_rect()
-
-Clock = pygame.time.Clock()
-fps = 60
-
 main_player = Player([1,1])
-
-key_to_dir = {
-    pygame.constants.K_UP: Direction.up,
-    pygame.constants.K_DOWN: Direction.down,
-    pygame.constants.K_LEFT: Direction.left,
-    pygame.constants.K_RIGHT: Direction.right
-};
-
-bombs = []
-explosion = []
-players = [main_player]
-
-standard_rect = pygame.Rect(0, 0, blockW, blockH)
-
+players.append(main_player)
 
 def handle_input(key):
-    if not key:
+    if key == None:
         return
 
     dir = key_to_dir.get(key, None)
-    if dir:
+    if dir != None:
         main_player.move(dir)
-        if key == pygame.constants.K_SPACE:
-            main_player.drop_bomb()
+
+    if key == pygame.constants.K_SPACE:
+        main_player.drop_bomb()
 
 def execute_AI():
     pass
@@ -57,7 +35,7 @@ def update_explosions(t):
 def update_stuff(t):
     #update explosions
     update_bombs(t)
-    update_explosions(t)
+    #update_explosions(t)
 
 while 1:
     tickFPS = Clock.tick(fps)
@@ -67,10 +45,11 @@ while 1:
             sys.exit()
         elif event.type == pygame.KEYDOWN:
             pressed=event.key
+            print(pressed)
 
     handle_input(pressed)
-    handle_AI()
-    update_stuff()
+    execute_AI()
+    update_stuff(tickFPS)
     draw_stuff()
 
     # ballrect = ballrect.move(speed)

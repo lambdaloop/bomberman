@@ -1,14 +1,6 @@
-def can_move(new_position):
-    if not get_block(new_position).is_walkable():
-        return False
-    else:
-        obj = get_object(new_position)
-        if obj and (not isinstance(obj, Powerup)):
-            return False
-        else:
-            return True
-
-
+from bomber_constants import *
+from bombermap import *
+from bomb import *
 
 class Player:
     def __init__(self, position, isComputer = False , max_bombs = 1, power = 1):
@@ -17,7 +9,6 @@ class Player:
         self.max_bombs = max_bombs
         self.power = power
         self.bombinv = max_bombs
-
 
     def move(self, dir):
         new_position = list(self.position)
@@ -38,8 +29,8 @@ class Player:
 
     def drop_bomb(self):
         if (self.bombinv > 0):
-            b = Bomb(power, position)
-            map[position[0],position[1]].add_bomb()
+            b = Bomb(self.power, self.position)
+#            get_block(self.position).add_bomb()
             bombs.append(b)
 
             self.bombinv = self.bombinv - 1
