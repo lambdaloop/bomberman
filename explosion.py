@@ -26,6 +26,7 @@ class Explosion:
             self.remove()
 
     def remove(self):
+        global powerups
         for pos in self.exploded_positions:
             bombermap.set_object(pos, None)
         explosions.remove(self)

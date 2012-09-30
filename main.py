@@ -1,5 +1,5 @@
 import sys, pygame
-import spritesheet
+#import spritesheet
 from bomber_constants import *
 from bombermap import *
 from drawstuff import *
@@ -12,7 +12,7 @@ players.append(main_player)
 second_player = Player([13, 11])
 players.append(second_player)
 
-num_humans = 1
+num_humans = 2
 
 
 def reset_game():
@@ -41,7 +41,6 @@ def reset_game():
         for y in range(mapH):
             map[x][y] = Block(startmap[x][y].btype)
             map_objects[x][y] = None
-
 
 
 def handle_input(key):

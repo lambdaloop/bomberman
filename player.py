@@ -71,7 +71,8 @@ class Player:
 
     def die(self):
         self.alive = False
-        global num_humans
+        global num_humans, players
+
         if self in players:
             players.remove(self)
         if not self.computer:
