@@ -1,4 +1,5 @@
 import pygame
+import sys
 
 class Direction:
     up, down, left, right = range(4)
@@ -46,3 +47,4 @@ def game_over():
     global mainLoop
     mainLoop = False
     print("game over!")
+    sys.exit()

@@ -1,10 +1,8 @@
-
-
 class Direction:
     up, down, left, right = range(4)
 
 class BlockType:
-    blank, wall, brick, powerup = range(4)
+    blank, wall, brick = range(3)
 
 class PowerupType:
     extraBomb, speed, bombPower = range(3)
