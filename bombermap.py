@@ -21,14 +21,14 @@ class Block:
 
 blockW, blockH = 32, 32
 mapW, mapH = 15, 13
-test = True
+test = False
 
 if test:
     map = [[Block() for x in range(mapW)] for y in range(mapH)]
 else:
     textfile = open("map.txt", "rt")
     key = {'w' : BlockType.wall, ' ' : BlockType.blank, '-' : BlockType.brick}
-    map = [][]
+    map = [[None for x in range(mapW)] for y in range(mapH)]
     for i in range(mapH):
         line = textfile.readline()
         for j in range(mapW):
