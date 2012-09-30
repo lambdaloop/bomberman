@@ -1,3 +1,4 @@
+
 class Direction:
     up, down, left, right = range(4)
 
@@ -13,7 +14,7 @@ class Block:
     def is_walkable(self):
         return self.btype != (BlockType.wall and BlockType.brick)
     def is_destroyable(self):
-        return self.btype == BlockType.wall
+        return self.btype == BlockType.brick
     def is_bomb_passable(self):
         return self.btype == BlockType.blank
 
@@ -39,7 +40,7 @@ else:
         for j in range(mapW):
             map[j][i] = Block(line[j])
 
-    text.file.close()
+    textfile.close()
 
 map_objects = [[None for x in range(mapW)] for y in range(mapH)]
 
