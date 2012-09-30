@@ -11,7 +11,7 @@ class Block:
     def __init__(self, btype=BlockType.blank, powerup=None, bomb = False):
         self.btype = btype
     def is_walkable(self):
-        return self.btype != BlockType.wall
+        return self.btype != (BlockType.wall and BlockType.brick)
     def is_destroyable(self):
         return self.btype == BlockType.wall
     def is_bomb_passable(self):
@@ -37,6 +37,12 @@ def get_object(pos):
 
 def get_block(pos):
     return map[pos[0]][pos[1]]
+
+def get_player(position):
+    for player in players:
+        if player.position == position:
+            return player
+    return False
 
 def can_move(new_position):
     if not get_block(new_position).is_walkable():
