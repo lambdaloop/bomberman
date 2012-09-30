@@ -1,6 +1,18 @@
+
+
+class Direction:
+    up, down, left, right = range(4)
+
+class BlockType:
+    blank, wall, brick, powerup = range(4)
+
+class PowerupType:
+    extraBomb, speed, bombPower = range(3)
+
 from bomber_constants import *
 from powerup import *
 import explosion
+
 
 class Block:
     def __init__(self, btype=BlockType.blank, powerup=None, bomb = False):
