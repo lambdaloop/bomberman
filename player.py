@@ -3,7 +3,7 @@ from bombermap import *
 from bomb import *
 
 class Player:
-    def __init__(self, position, isComputer = False , max_bombs = 1, power = 1):
+    def __init__(self, position, isComputer = False , max_bombs = 5, power = 1):
         self.computer = isComputer
         self.position = position
         self.max_bombs = max_bombs
@@ -29,15 +29,14 @@ class Player:
 
     def drop_bomb(self):
         if (self.bombinv > 0):
-            b = Bomb(self.power, self.position)
-#            get_block(self.position).add_bomb()
+            b = Bomb(self.power, self.position, self)
             bombs.append(b)
 
             self.bombinv = self.bombinv - 1
             set_object(self.position, b)
 
     def recharge_bomb(self, num = 1):
-        if self.bombinv + num <= max_bombs:
+        if self.bombinv + num <= self.max_bombs:
             self.bombinv = self.bombinv + num
 
     def powerup_power(self, num = 1):
@@ -46,3 +45,12 @@ class Player:
     def powerup_bomb(self, num = 1):
         self.max_bombs += num
         self.bombinv += num
+
+    def die(self):
+        global num_humans
+        if self in players:
+            players.remove(self)
+        if not self.computer:
+            num_humans -= 1
+        if num_humans == 0:
+            gameOver()

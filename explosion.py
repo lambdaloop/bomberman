@@ -1,56 +1,51 @@
 from bomber_constants import *
-from bombermap import *
+from powerup import *
+import bombermap
+import random
 
 class Explosion:
+    def __init__(self, power, position):
+        self.power = power
+        self.position = position
+        self.timeleft = 1000
 
-	def __init__(self, power, position):
-		self.power = power
-		self.position = position
-		self.timeleft = 1000
-		self.exploded_positions = [position].extend(explode(Direction.left)).extend(explode(Direction.right))
-		.extend(explode(Direction.up)).extend(explode(Direction.down))
+        ps = self.explode()
+        ps.append(self.position)
+        self.exploded_positions = ps
+        for pos in self.exploded_positions:
+            bombermap.set_object(pos, self)
 
+    def update(self, timelapsed):
+        self.timeleft -= timelapsed
+        if self.timeleft < 0:
+            self.remove()
 
-	def update(self, timelapsed):
-		self.timeleft -= timelapsed
-		if self.timeleft < 0:
-			self.remove()
+    def remove(self):
+        for pos in self.exploded_positions:
+            if random.random() < powerup_proportion:
+                bombermap.set_object(pos, random_powerup())
+            else:
+                bombermap.set_object(pos, None)
+        explosions.remove(self)
 
-	def remove(self):
-		explosions.remove(self)
+    def explode(self):
+        "Returns the array of positions of the explosion in a direction dir from the bomb, in order"
+        final = []
 
-	def explode(self, dir):
-		"Returns the array of positions of the explosion in a direction dir from the bomb, in order"
-		final = []
-		flame = self.position
-
-		if dir == Direction.left:
-			axis = 0
-			increment = -1
-		elif dir == Direction.right:
-			axis = 0
-			increment = 1
-		elif dir == Direction.up:
-			axis = 1
-			increment = -1
-		elif dir == Direction.down:
-			axis = 1
-			increment = 1
-
-		for i in range(power):
-			new_position = list[flame]
-			new_position[axis] += increment
-			if can_move(new_position):
-				final.append(new_position)
-				flame = new_position
-
-			else 
-				if get_block(new_position).is_destroyable():
-					get_block(new_position).destroy()
-				if get_obj(new_position) != None:
-					set_object(new_position, None)
-				if get_player(new_position):
-					players.remove(get_player(new_position))
-				return final
-
-		return final
+        for axis in [0,1]:
+            for increment in [-1, 1]:
+                new_position = list(self.position)
+                for i in range(self.power):
+                    new_position[axis] += increment
+                    if bombermap.can_explosion_pass(new_position):
+                        final.append(list(new_position))
+                    else:
+                        if bombermap.get_block(new_position).is_destroyable():
+                            bombermap.get_block(new_position).destroy()
+                        if bombermap.get_object(new_position) != None:
+                            bombermap.set_object(new_position, None)
+                        if bombermap.get_player(new_position):
+                            bombermap.get_player(new_position).die()
+                        break
+        print(final)
+        return final

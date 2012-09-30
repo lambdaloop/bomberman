@@ -10,6 +10,8 @@ pygame.init()
 main_player = Player([1,1])
 players.append(main_player)
 
+num_humans = 1
+
 def handle_input(key):
     if key == None:
         return
@@ -35,9 +37,15 @@ def update_explosions(t):
 def update_stuff(t):
     #update explosions
     update_bombs(t)
-    #update_explosions(t)
+    update_explosions(t)
 
-while 1:
+mainLoop = True
+
+def gameOver():
+    global mainLoop
+    mainLoop = False
+
+while mainLoop:
     tickFPS = Clock.tick(fps)
     pressed = None
     for event in pygame.event.get():
@@ -45,7 +53,6 @@ while 1:
             sys.exit()
         elif event.type == pygame.KEYDOWN:
             pressed=event.key
-            print(pressed)
 
     handle_input(pressed)
     execute_AI()
@@ -61,3 +68,5 @@ while 1:
     # screen.fill(black)
         # screen.blit(ball, ballrect)
         # pygame.display.flip()
+
+sys.exit()

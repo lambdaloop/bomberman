@@ -1,4 +1,5 @@
 
+
 class Direction:
     up, down, left, right = range(4)
 
@@ -8,41 +9,46 @@ class BlockType:
 class PowerupType:
     extraBomb, speed, bombPower = range(3)
 
+from bomber_constants import *
+from powerup import *
+import explosion
+
+
 class Block:
     def __init__(self, btype=BlockType.blank, powerup=None, bomb = False):
         self.btype = btype
     def is_walkable(self):
-        return self.btype != (BlockType.wall and BlockType.brick)
+        return self.btype != BlockType.wall and self.btype != BlockType.brick
     def is_destroyable(self):
         return self.btype == BlockType.brick
     def is_bomb_passable(self):
         return self.btype == BlockType.blank
 
     def destroy(self):
-        if self.isDestroyable():
+        if self.is_destroyable():
             self.btype = BlockType.blank
             return True
         else:
             return False
 
-blockW, blockH = 32, 32
-mapW, mapH = 15, 13
-test = True
+
+test = False
 
 if test:
-    map = [[Block() for x in range(mapW)] for y in range(mapH)]
+    map = [[Block() for x in range(mapH)] for y in range(mapW)]
+    map[2][2].btype = BlockType.wall
 else:
     textfile = open("map.txt", "rt")
     key = {'w' : BlockType.wall, ' ' : BlockType.blank, '-' : BlockType.brick}
-    map = [][]
+    map = [[None for x in range(mapH)] for y in range(mapW)]
     for i in range(mapH):
         line = textfile.readline()
         for j in range(mapW):
-            map[j][i] = Block(line[j])
+            map[j][i] = Block(key.get(line[j], BlockType.blank))
 
     textfile.close()
 
-map_objects = [[None for x in range(mapW)] for y in range(mapH)]
+map_objects = [[None for x in range(mapH)] for y in range(mapW)]
 
 def set_object(pos, obj):
     map_objects[pos[0]][pos[1]] = obj
@@ -59,14 +65,11 @@ def get_player(position):
             return player
     return False
 
-def can_move(new_position):
-    if not get_block(new_position).is_walkable():
+def can_move(p):
+    if not get_block(p).is_walkable():
         return False
-    else:
-        obj = get_object(new_position)
-        if obj and (not isinstance(obj, Powerup)):
-            return False
-        elif get_player(new_position):
-            return False
-        else:
-            return True
+    obj = get_object(p)
+    return not obj or isinstance(obj, Powerup) or isinstance(obj, explosion.Explosion)
+
+def can_explosion_pass(p):
+    return get_block(p).is_bomb_passable() and get_object(p) == None

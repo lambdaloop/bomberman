@@ -3,9 +3,14 @@ from bomber_constants import *
 from bombermap import *
 
 player_image = pygame.image.load('img/player.png')
-block_images = []
 bomb_image = pygame.image.load('img/squarebomb.png')
 explosion_image = pygame.image.load('img/explosion.png')
+
+block_images = [None, 'img/wall.png', 'img/brick.png']
+for i in range(1, len(block_images)):
+    block_images[i] = pygame.image.load(block_images[i])
+
+
 
 standard_rect = pygame.Rect(0, 0, blockW, blockH)
 
