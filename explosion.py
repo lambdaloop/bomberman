@@ -2,16 +2,13 @@ from bomber_constants import *
 from bombermap import *
 
 class Explosion:
-
         def __init__(self, power, position):
                 self.power = power
                 self.position = position
                 self.timeleft = 1000
+                self.exploded_positions = [position].extend(explode(Direction.left)).extend(explode(Direction.right))
+                .extend(explode(Direction.up)).extend(explode(Direction.down))
 
-                ps = []
-                for dir in [Direction.up, Direction.left, Direction.right, Direction.down]:
-                        ps.extend(self.explode(dir))
-                self.exploded_positions = ps
 
         def update(self, timelapsed):
                 self.timeleft -= timelapsed
@@ -39,18 +36,20 @@ class Explosion:
                         axis = 1
                         increment = 1
 
-                for i in range(self.power):
-                        new_position = list(flame)
+                for i in range(power):
+                        new_position = list[flame]
                         new_position[axis] += increment
                         if can_move(new_position):
                                 final.append(new_position)
                                 flame = new_position
-                        elif get_block(new_position).is_destroyable():
-                                get_block(new_position).destroy()
-                        elif get_obj(new_position) != None:
-                                set_object(new_position, None)
-                        elif get_player(new_position):
-                                players.remove(get_player(new_position))
 
+                        else:
+                                if get_block(new_position).is_destroyable():
+                                        get_block(new_position).destroy()
+                                if get_obj(new_position) != None:
+                                        set_object(new_position, None)
+                                if get_player(new_position):
+                                        players.remove(get_player(new_position))
+                                return final
 
                 return final
