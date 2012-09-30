@@ -1,9 +1,11 @@
 from bomber_constants import *
 from bombermap import *
 from bomb import *
+from player import *
+from explosion import *
 
 class Player:
-    def __init__(self, position, isComputer = False , max_bombs = 5, power = 1):
+    def __init__(self, position, isComputer = False , max_bombs = 1, power = 1):
         self.computer = isComputer
         self.position = position
         self.max_bombs = max_bombs
@@ -27,17 +29,19 @@ class Player:
 
             obj = get_object(new_position)
             if isinstance(obj, Powerup):
-                powerups.remove(obj)
                 self.use_powerup(obj)
             elif isinstance(obj, Explosion):
                 self.die()
-            set_object(new_position, self)
 
+            set_object(new_position, self)
             self.position = new_position
 
-
     def use_powerup(self, obj):
-        pass
+        if obj.type == 0:
+            self.powerup_bomb()
+        else:
+            self.powerup_power()
+        powerups.remove(obj)
 
     def drop_bomb(self):
         if (self.bombinv > 0):

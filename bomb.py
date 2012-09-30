@@ -1,6 +1,6 @@
 from bomber_constants import *
-from bombermap import *
-from explosion import *
+import bombermap
+import explosion
 
 class Bomb:
         def __init__(self, power, position, player):
@@ -15,11 +15,11 @@ class Bomb:
                         self.explode()
 
         def explode(self):
-                explosions.append(Explosion(self.power, self.position))
-                self.player.recharge_bomb()
                 self.remove()
+                explosions.append(explosion.Explosion(self.power, self.position))
+                self.player.recharge_bomb()
 
         def remove(self):
                 bombs.remove(self)
-                if(get_object(self.position) == self):
-                        set_object(self.position, None)
+                if(bombermap.get_object(self.position) == self):
+                        bombermap.set_object(self.position, None)

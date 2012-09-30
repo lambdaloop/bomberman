@@ -4,7 +4,7 @@ class Powerup:
         self.type = type
         self.position = pos
 
-powerup_proportion = 0.8
+powerup_proportion = 0.3
 
 def random_powerup(pos):
     return Powerup(pos, random.randrange(2))

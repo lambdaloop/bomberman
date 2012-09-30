@@ -1,5 +1,6 @@
 from bomber_constants import *
 from powerup import *
+import bomb
 import bombermap
 import random
 
@@ -37,6 +38,15 @@ class Explosion:
                     if bombermap.can_explosion_pass(new_position):
                         final.append(list(new_position))
                     else:
+                        obj = bombermap.get_object(new_position)
+                        if obj != None:
+                            if(isinstance(obj, Powerup)):
+                                powerups.remove(obj)
+                            elif(isinstance(obj, bomb.Bomb)):
+                                obj.explode()
+
+                            bombermap.set_object(new_position, None)
+
                         if bombermap.get_block(new_position).is_destroyable():
                             bombermap.get_block(new_position).destroy()
                             if random.random() < powerup_proportion:
@@ -45,9 +55,8 @@ class Explosion:
                                 powerups.append(p)
                                 bombermap.set_object(new_position, p)
 
-                        if bombermap.get_object(new_position) != None:
-                            bombermap.set_object(new_position, None)
                         if bombermap.get_player(new_position):
+                            final.append(list(new_position))
                             bombermap.get_player(new_position).die()
                         break
         print(final)

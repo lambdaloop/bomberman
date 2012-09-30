@@ -27,7 +27,14 @@ fps = 60
 
 main_player = None
 
-key_to_dir = {
+key1_to_dir = {
+    pygame.constants.K_w: Direction.up,
+    pygame.constants.K_s: Direction.down,
+    pygame.constants.K_a: Direction.left,
+    pygame.constants.K_d: Direction.right
+};
+
+key2_to_dir = {
     pygame.constants.K_UP: Direction.up,
     pygame.constants.K_DOWN: Direction.down,
     pygame.constants.K_LEFT: Direction.left,
@@ -47,4 +54,3 @@ def game_over():
     global mainLoop
     mainLoop = False
     print("game over!")
-    sys.exit()
