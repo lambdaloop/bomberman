@@ -5,12 +5,14 @@ from bombermap import *
 player_image = pygame.image.load('img/player.png')
 bomb_image = pygame.image.load('img/squarebomb.png')
 explosion_image = pygame.image.load('img/explosion.png')
-powerup_image = pygame.image.load('img/powerup.png')
+
+powerup_images = ['img/powerup_extrabombs.png', 'img/powerup_extrapower.png']
+for i in range(len(powerup_images)):
+    powerup_images[i] = pygame.image.load(powerup_images[i])
 
 block_images = [None, 'img/wall.png', 'img/brick.png']
 for i in range(1, len(block_images)):
     block_images[i] = pygame.image.load(block_images[i])
-
 
 
 standard_rect = pygame.Rect(0, 0, blockW, blockH)
@@ -51,7 +53,7 @@ def draw_explosion(e):
 
 def draw_powerup(p):
     rect = get_rect(p.position)
-    screen.blit(powerup_image, rect)
+    screen.blit(powerup_images[p.type], rect)
 
 def draw_list_function(func, l):
     def f():

@@ -22,13 +22,7 @@ class Explosion:
 
     def remove(self):
         for pos in self.exploded_positions:
-            if random.random() < powerup_proportion:
-                print("powerup at ", pos)
-                p = random_powerup(pos)
-                powerups.append(p)
-                bombermap.set_object(pos, p)
-            else:
-                bombermap.set_object(pos, None)
+            bombermap.set_object(pos, None)
         explosions.remove(self)
 
     def explode(self):
@@ -45,6 +39,12 @@ class Explosion:
                     else:
                         if bombermap.get_block(new_position).is_destroyable():
                             bombermap.get_block(new_position).destroy()
+                            if random.random() < powerup_proportion:
+                                print("powerup at ", new_position)
+                                p = random_powerup(new_position)
+                                powerups.append(p)
+                                bombermap.set_object(new_position, p)
+
                         if bombermap.get_object(new_position) != None:
                             bombermap.set_object(new_position, None)
                         if bombermap.get_player(new_position):

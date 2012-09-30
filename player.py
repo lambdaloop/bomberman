@@ -24,16 +24,19 @@ class Player:
         if can_move(new_position):
             if isinstance(get_object(self.position), Player):
                 set_object(self.position, None)
-            self.position = new_position
 
             obj = get_object(new_position)
             if isinstance(obj, Powerup):
+                powerups.remove(obj)
                 self.use_powerup(obj)
             elif isinstance(obj, Explosion):
                 self.die()
             set_object(new_position, self)
 
-    def use_powerup(obj):
+            self.position = new_position
+
+
+    def use_powerup(self, obj):
         pass
 
     def drop_bomb(self):

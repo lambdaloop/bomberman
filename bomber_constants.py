@@ -8,7 +8,7 @@ class BlockType:
     blank, wall, brick = range(3)
 
 class PowerupType:
-    extraBomb, speed, bombPower = range(3)
+    extraBomb, bombPower = range(2)
 
 blockW, blockH = 32, 32
 mapW, mapH = 15,13

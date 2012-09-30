@@ -7,4 +7,4 @@ class Powerup:
 powerup_proportion = 0.8
 
 def random_powerup(pos):
-    return Powerup(pos, random.randrange(3))
+    return Powerup(pos, random.randrange(2))
