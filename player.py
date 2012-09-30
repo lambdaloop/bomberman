@@ -33,10 +33,13 @@ class Player:
                 self.die()
             set_object(new_position, self)
 
-    def use_powerup(obj):
-        if obj.type = 1:
+    def use_powerup(self, obj):
+        if obj.type == 0:
             powerup_bomb()
-        else powerup_power()
+        else:
+            powerup_power()
+        map_objects.remove(obj)
+
 
     def drop_bomb(self):
         if (self.bombinv > 0):
