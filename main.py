@@ -16,83 +16,83 @@ num_humans = 2
 
 
 def reset_game():
-    global bombs, explosions, powerups, players, mainLoop
-    for p in players:
-        players.remove(p)
-    players.append(main_player)
-    players.append(second_player)
+	global bombs, explosions, powerups, players, mainLoop
+	for p in players:
+		players.remove(p)
+	players.append(main_player)
+	players.append(second_player)
 
-    main_player.reset()
-    second_player.reset()
+	main_player.reset()
+	second_player.reset()
 
-    main_player.position = [1,1]
-    second_player.position = [13, 11]
-    for bomb in bombs:
-        bomb.remove()
+	main_player.position = [1,1]
+	second_player.position = [13, 11]
+	for bomb in bombs:
+		bomb.remove()
 
-    for e in explosions:
-        e.remove()
-    for p in powerups:
-        powerups.remove(p)
+	for e in explosions:
+		e.remove()
+	for p in powerups:
+		powerups.remove(p)
 
-    mainLoop = True
+	mainLoop = True
 
-    for x in range(mapW):
-        for y in range(mapH):
-            map[x][y] = Block(startmap[x][y].btype)
-            map_objects[x][y] = None
+	for x in range(mapW):
+		for y in range(mapH):
+			map[x][y] = Block(startmap[x][y].btype)
+			map_objects[x][y] = None
 
 
 def handle_input(key):
-    if key == None:
-        return
+	if key == None:
+		return
 
-    if key == pygame.constants.K_SPACE:
-        reset_game()
-        print(bombs)
+	if key == pygame.constants.K_SPACE:
+		reset_game()
+		print(bombs)
 
-    if main_player.alive:
-        dir = key1_to_dir.get(key, None)
-        if dir != None:
-            main_player.move(dir)
-        if key == pygame.constants.K_LSHIFT:
-            main_player.drop_bomb()
+	if main_player.alive:
+		dir = key1_to_dir.get(key, None)
+		if dir != None:
+			main_player.move(dir)
+		if key == pygame.constants.K_LSHIFT:
+			main_player.drop_bomb()
 
-    if second_player.alive:
-        dir = key2_to_dir.get(key, None)
-        if dir != None:
-            second_player.move(dir)
+	if second_player.alive:
+		dir = key2_to_dir.get(key, None)
+		if dir != None:
+			second_player.move(dir)
 
-        if key == pygame.constants.K_RSHIFT:
-            second_player.drop_bomb()
+		if key == pygame.constants.K_RSHIFT:
+			second_player.drop_bomb()
 
 def execute_AI():
-    pass
+	pass
 
 def update_bombs(t):
-    for bomb in bombs:
-        bomb.update(t)
+	for bomb in bombs:
+		bomb.update(t)
 
 def update_explosions(t):
-    for e in explosions:
-        e.update(t)
+	for e in explosions:
+		e.update(t)
 
 def update_stuff(t):
-    update_bombs(t)
-    update_explosions(t)
+	update_bombs(t)
+	update_explosions(t)
 
 while mainLoop:
-    tickFPS = Clock.tick(fps)
-    pressed = None
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            sys.exit()
-        elif event.type == pygame.KEYDOWN:
-            pressed=event.key
+	tickFPS = Clock.tick(fps)
+	pressed = None
+	for event in pygame.event.get():
+		if event.type == pygame.QUIT:
+			sys.exit()
+		elif event.type == pygame.KEYDOWN:
+			pressed=event.key
 
-    handle_input(pressed)
-    execute_AI()
-    update_stuff(tickFPS)
-    draw_stuff()
+	handle_input(pressed)
+	execute_AI()
+	update_stuff(tickFPS)
+	draw_stuff()
 
 sys.exit()
