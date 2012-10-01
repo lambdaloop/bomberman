@@ -63,6 +63,7 @@ def get_block(pos):
 	return map[pos[0]][pos[1]]
 
 def get_player(position):
+	players = humans.union(computers)
 	for player in players:
 		if player.position == position:
 			return player

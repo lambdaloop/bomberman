@@ -5,13 +5,14 @@ from player import *
 from explosion import *
 
 class Player:
-	def __init__(self, position, isComputer = False , max_bombs = 1, power = 1):
+	def __init__(self, position, isComputer = False , num=0, max_bombs = 1, power = 1):
 		self.computer = isComputer
 		self.position = position
 		self.max_bombs = max_bombs
 		self.power = power
 		self.bombinv = max_bombs
 		self.alive = True
+		self.num = num
 
 	def reset(self):
 		self.max_bombs = 1
@@ -19,6 +20,14 @@ class Player:
 		self.bombinv = self.max_bombs
 		self.alive = True
 
+	def update(self, time):
+		obj = get_object(self.position)
+		if isinstance(obj, Powerup):
+			self.use_powerup(obj)
+			set_object(self.powerup, self)
+		elif isinstance(obj, Explosion):
+			self.die()
+			
 	def move(self, dir):
 		new_position = list(self.position)
 		if dir == Direction.right:
@@ -48,12 +57,12 @@ class Player:
 			self.powerup_bomb()
 		else:
 			self.powerup_power()
-		powerups.remove(obj)
+		powerups.discard(obj)
 
 	def drop_bomb(self):
 		if (self.bombinv > 0):
 			b = Bomb(self.power, self.position, self)
-			bombs.append(b)
+			bombs.add(b)
 
 			self.bombinv = self.bombinv - 1
 			set_object(self.position, b)
@@ -71,11 +80,7 @@ class Player:
 
 	def die(self):
 		self.alive = False
-		global num_humans, players
+		global humans, computers
 
-		if self in players:
-			players.remove(self)
-		if not self.computer:
-			num_humans -= 1
-		if num_humans <= 0:
-			game_over()
+		humans.discard(self)
+		computers.discard(self)

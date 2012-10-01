@@ -62,9 +62,14 @@ def draw_list_function(func, l):
 	return f
 
 draw_bombs = draw_list_function(draw_bomb, bombs)
-draw_players = draw_list_function(draw_player, players)
 draw_explosions = draw_list_function(draw_explosion, explosions)
 draw_powerups = draw_list_function(draw_powerup, powerups)
+
+def draw_players():
+	for h in humans:
+		draw_player(h)
+	for c in computers:
+		draw_player(c)
 
 white = 255,255,255
 

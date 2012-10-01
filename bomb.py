@@ -16,10 +16,10 @@ class Bomb:
 
 	def explode(self):
 		self.remove()
-		explosions.append(explosion.Explosion(self.power, self.position))
+		explosions.add(explosion.Explosion(self.power, self.position))
 		self.player.recharge_bomb()
 
 	def remove(self):
-		bombs.remove(self)
+		bombs.discard(self)
 		if(bombermap.get_object(self.position) == self):
 			bombermap.set_object(self.position, None)

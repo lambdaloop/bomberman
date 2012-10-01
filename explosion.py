@@ -26,10 +26,9 @@ class Explosion:
 			self.remove()
 
 	def remove(self):
-		global powerups
 		for pos in self.exploded_positions:
 			bombermap.set_object(pos, None)
-		explosions.remove(self)
+		explosions.discard(self)
 
 	def explode(self):
 		"Returns the array of positions of the explosion in a direction dir from the bomb, in order"
@@ -46,7 +45,7 @@ class Explosion:
 						obj = bombermap.get_object(new_position)
 						if obj != None:
 							if(isinstance(obj, Powerup)):
-								powerups.remove(obj)
+								powerups.discard(obj)
 							elif(isinstance(obj, bomb.Bomb)):
 								obj.explode()
 
@@ -56,11 +55,17 @@ class Explosion:
 							bombermap.get_block(new_position).destroy()
 							if random.random() < powerup_proportion:
 								p = random_powerup(new_position)
-								powerups.append(p)
+								powerups.add(p)
 								bombermap.set_object(new_position, p)
-
-						if bombermap.get_player(new_position):
+						
+						# need extra check for players because player may not be
+						# on map if placing bomb
+						p = bombermap.get_player(new_position)
+						if p:
 							final.append(list(new_position))
-							bombermap.get_player(new_position).die()
+							p.die()
 						break
 		return final
+
+
+

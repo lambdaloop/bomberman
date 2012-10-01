@@ -19,9 +19,6 @@ black = 0, 0, 0
 
 screen = pygame.display.set_mode(size)
 
-ball = pygame.image.load("img/ball.gif")
-ballrect = ball.get_rect()
-
 Clock = pygame.time.Clock()
 fps = 60
 
@@ -31,14 +28,16 @@ key1_us_to_dir = {
 	pygame.constants.K_w: Direction.up,
 	pygame.constants.K_s: Direction.down,
 	pygame.constants.K_a: Direction.left,
-	pygame.constants.K_d: Direction.right
+	pygame.constants.K_d: Direction.right,
+	pygame.constants.K_LSHIFT: "bomb"
 };
 
 key1_dvorak_to_dir = {
 	pygame.constants.K_COMMA: Direction.up,
 	pygame.constants.K_o: Direction.down,
 	pygame.constants.K_a: Direction.left,
-	pygame.constants.K_e: Direction.right
+	pygame.constants.K_e: Direction.right,
+	pygame.constants.K_LSHIFT: "bomb"
 };
 
 key1_to_dir = key1_us_to_dir
@@ -47,21 +46,19 @@ key2_to_dir = {
 	pygame.constants.K_UP: Direction.up,
 	pygame.constants.K_DOWN: Direction.down,
 	pygame.constants.K_LEFT: Direction.left,
-	pygame.constants.K_RIGHT: Direction.right
+	pygame.constants.K_RIGHT: Direction.right,
+	pygame.constants.K_RSHIFT: "bomb"
 };
 
-bombs = []
-explosions = []
-powerups = []
-players = []
+keys = [key1_to_dir, key2_to_dir]
 
-num_humans = 0
+bombs = set()
+explosions = set()
+powerups = set()
 
-mainLoop = True
+humans = set()
+computers = set()
 
 def game_over():
-	global mainLoop
-	mainLoop = False
 	print("game over!")
-
 

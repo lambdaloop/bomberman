@@ -7,35 +7,26 @@ from player import *
 
 pygame.init()
 
-main_player = Player([1,1])
-players.append(main_player)
-second_player = Player([13, 11])
-players.append(second_player)
+main_player = Player([1,1], num=0)
+second_player = Player([13, 11], num=1)
 
-num_humans = 2
-
+humans.add(main_player)
+humans.add(second_player)
 
 def reset_game():
-	global bombs, explosions, powerups, players, mainLoop
-	for p in players:
-		players.remove(p)
-	players.append(main_player)
-	players.append(second_player)
+	global bombs, explosions, powerups, humans
+
+	humans.add(main_player)
+	humans.add(second_player)
 
 	main_player.reset()
 	second_player.reset()
 
 	main_player.position = [1,1]
 	second_player.position = [13, 11]
-	for bomb in bombs:
-		bomb.remove()
-
-	for e in explosions:
-		e.remove()
-	for p in powerups:
-		powerups.remove(p)
-
-	mainLoop = True
+	bombs.clear()
+	explosions.clear()
+	powerups.clear()
 
 	for x in range(mapW):
 		for y in range(mapH):
@@ -49,50 +40,67 @@ def handle_input(key):
 
 	if key == pygame.constants.K_SPACE:
 		reset_game()
-		print(bombs)
 
-	if main_player.alive:
-		dir = key1_to_dir.get(key, None)
-		if dir != None:
-			main_player.move(dir)
-		if key == pygame.constants.K_LSHIFT:
-			main_player.drop_bomb()
+	for h in humans:
+		if not h.alive:
+			continue
 
-	if second_player.alive:
-		dir = key2_to_dir.get(key, None)
-		if dir != None:
-			second_player.move(dir)
-
-		if key == pygame.constants.K_RSHIFT:
-			second_player.drop_bomb()
+		x = keys[h.num].get(key, None)
+		if x == "bomb":
+			h.drop_bomb()
+		elif x != None:
+			h.move(x)
+		
 
 def execute_AI():
 	pass
 
 def update_bombs(t):
-	for bomb in bombs:
+	for bomb in bombs.copy():
 		bomb.update(t)
 
 def update_explosions(t):
-	for e in explosions:
+	for e in explosions.copy():
 		e.update(t)
+
+def update_humans(t):
+	for p in humans.copy():
+		p.update(t)
 
 def update_stuff(t):
 	update_bombs(t)
 	update_explosions(t)
+	update_humans(t)
 
-while mainLoop:
-	tickFPS = Clock.tick(fps)
-	pressed = None
-	for event in pygame.event.get():
-		if event.type == pygame.QUIT:
-			sys.exit()
-		elif event.type == pygame.KEYDOWN:
-			pressed=event.key
+def is_game_over():
+	return len(humans)<=0
 
-	handle_input(pressed)
-	execute_AI()
-	update_stuff(tickFPS)
-	draw_stuff()
+def main_loop():
+	while not is_game_over():
+		tickFPS = Clock.tick(fps)
+		pressed = None
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				sys.exit()
+			elif event.type == pygame.KEYDOWN:
+				pressed=event.key
 
-sys.exit()
+		handle_input(pressed)
+		execute_AI()
+		update_stuff(tickFPS)
+		draw_stuff()
+
+while True:
+	main_loop()
+	#game over here
+	pygame.time.delay(2000)
+	reset_game()
+
+
+
+
+
+
+
+
+
