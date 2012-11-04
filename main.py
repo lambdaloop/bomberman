@@ -5,7 +5,7 @@ from bomber_constants import *
 from player import *
 from bombermap import *
 from drawstuff import *
-
+from menu import *
 
 pygame.init()
 
@@ -163,67 +163,7 @@ def main_loop():
         update_stuff(tickFPS)
         draw_stuff()
 
-def menu():
 
-    class Menu_screen:
-        "Menu is made up of a series of menu screens that are linked together"
-
-        def __init__(self, choices, num_humans = 0):
-            self.choices = choices
-            self.links = {}
-            self.selector = 0
-            self.num_humans = num_humans
-            self.length = len(choices)
-
-        def link(self, selection, m_s):
-            self.links[selection] = m_s
-            m_s.links["Back"] = self
-
-        def select(self):
-            selected = self.choices[self.selector]
-            if selected in self.links:
-                link = self.links[selected]
-                if isinstance(link, Menu_screen):
-                    return link
-            init_normal_game(self.num_humans, int(selected[0]))
-            return None
-
-        def menu_display(self):
-            draw_menu(self)
-
-        def incr_selector(self, incr):
-            new = self.selector + incr
-            if new >= 0 and new < len(self.choices):
-                self.selector = new
-
-
-    root = Menu_screen(["1 Human", "2 Humans"])
-    root_1 = Menu_screen(["1 CPU", "2 CPU", "3 CPU", "Back"], num_humans = 1)
-    root_2 = Menu_screen(["0 CPU", "1 CPU", "2 CPU", "Back"], num_humans = 2)
-
-    root.link("1 Human", root_1)
-    root.link("2 Humans", root_2)
-
-    current = root
-    current.menu_display()
-
-    while True:
-        pressed = None
-        for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
-                elif event.type == pygame.KEYDOWN:
-                    pressed=event.key
-        if pressed:
-            if pressed == pygame.constants.K_DOWN:
-                current.incr_selector(1)
-            elif pressed == pygame.constants.K_UP:
-                current.incr_selector(-1)
-            elif pressed == pygame.constants.K_RETURN:
-                current = current.select()
-                if current == None:  #Start game
-                    break
-            current.menu_display()
 
 while True:
     menu()
