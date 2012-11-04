@@ -10,16 +10,12 @@ from drawstuff import *
 pygame.init()
 
 start_positions = [[1,1], [13,11]]
-# main_player = Player([1,1], num=0)
-# second_player = Player([13, 11], num=1)
 
 for i, pos in enumerate(start_positions):
     all_humans.add(Player(pos, num=i))
 
 all_computers.add(Player([13, 1], num=-1, isComputer=True))
 
-#all_humans.add(main_player)
-#all_humans.add(second_player)
 
 for p in all_humans:
     humans.add(p)
@@ -30,8 +26,6 @@ for p in all_computers:
 def reset_game():
     global bombs, explosions, powerups, humans
 
-#    humans.add(main_player)
-#    humans.add(second_player)
     humans.clear()
     for p in all_humans:
         p.reset()
@@ -42,11 +36,6 @@ def reset_game():
         p.reset()
         computers.add(p)
 
-    # main_player.reset()
-    # second_player.reset()
-
-    # main_player.position = [1,1]
-    # second_player.position = [13, 11]
     bombs.clear()
     explosions.clear()
     powerups.clear()
@@ -85,7 +74,8 @@ def do_AI(p):
         return
 
     possible = []
-    min_effect = 10000
+    max_effect = -10000
+
     for (axis, inc) in ([0, -1], [0, 1], [1, -1], [1, 1]):
         pos = list(p.position)
         pos[axis] += inc
@@ -98,14 +88,14 @@ def do_AI(p):
         if b.is_walkable() and \
              not isinstance(get_object(pos), explosion.Explosion) and \
              not isinstance(get_object(pos), Bomb):
-            possible.append(pos)
             effect = bomb_effects[pos[0]][pos[1]]
-            if(effect < min_effect):
+            if(possible == [] or effect > max_effect):
                 min_effect = effect
+                possible = [pos]
+            else:
+                possible.append(pos)
 
     if possible != []:
-        possible = filter(lambda x: bomb_effects[x[0]][x[1]] == min_effect, possible)
-        possible = list(possible)
         p.change_position(random.choice(possible))
 
 
@@ -122,10 +112,10 @@ def update_bomb_effects(bomb):
             if not is_valid_position(p):
                 break
             elif can_explosion_pass(p):
-                bomb_effects[p[0]][p[1]] += i
+                bomb_effects[p[0]][p[1]] -= i
             else:
                 break
-    bomb_effects[bomb.position[0]][bomb.position[1]] += bomb.power+1
+    bomb_effects[bomb.position[0]][bomb.position[1]] -= bomb.power+1
 
 
 def update_bombs(t):
