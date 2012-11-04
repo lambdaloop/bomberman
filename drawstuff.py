@@ -26,6 +26,30 @@ def get_rect(pos):
     rect.left, rect.top = pos_to_pixel(pos)
     return rect
 
+def draw_menu(menu_screen):
+    font_path = 'coders_crux/coders_crux.ttf'
+    font = pygame.font.Font(font_path, 32)
+    font_color = (255, 255, 153)
+    places = ((100, 100), (100, 175), (100, 250), (100, 325))
+    width_height = (250, 50)
+    screen.fill(white)
+
+    #draw title
+    title_rect = pygame.Rect((100,20), width_height)
+    title_font = pygame.font.Font(font_path, 64)
+    title = title_font.render("Bombersquare", True, red)
+    screen.blit(title, title_rect)
+
+    for i in range(menu_screen.length):  
+        rect = pygame.Rect(places[i], width_height)
+        if menu_screen.selector == i:
+            highlight = green
+        else:
+            highlight = white
+        surface = font.render(menu_screen.choices[i], True, blue, highlight)
+        screen.blit(surface, rect)
+    pygame.display.flip()
+
 def draw_player(p):
     rect = get_rect(p.position)
     screen.blit(player_image, rect)
@@ -78,7 +102,9 @@ def draw_players():
 
 white = 255,255,255
 black = 0,0,0
-
+green = 0,255,0
+blue = 0,0,255
+red = 255,0,0
 
 def draw_stuff():
     screen.fill(white)
