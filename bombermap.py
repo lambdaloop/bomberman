@@ -51,7 +51,7 @@ else:
 
 map_objects = [[None for x in range(mapH)] for y in range(mapW)]
 
-
+bomb_effects = [[0 for x in range(mapH)] for y in range(mapW)]
 
 def set_object(pos, obj):
     map_objects[pos[0]][pos[1]] = obj

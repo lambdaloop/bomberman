@@ -79,12 +79,13 @@ def handle_input(key, keydown=False):
             else:
                 h.move(x)
 
+
 def do_AI(p):
     if p.repeat_move_delay > 0:
         return
 
-
     possible = []
+    min_effect = 10000
     for (axis, inc) in ([0, -1], [0, 1], [1, -1], [1, 1]):
         pos = list(p.position)
         pos[axis] += inc
@@ -98,8 +99,13 @@ def do_AI(p):
              not isinstance(get_object(pos), explosion.Explosion) and \
              not isinstance(get_object(pos), Bomb):
             possible.append(pos)
+            effect = bomb_effects[pos[0]][pos[1]]
+            if(effect < min_effect):
+                min_effect = effect
 
     if possible != []:
+        possible = filter(lambda x: bomb_effects[x[0]][x[1]] == min_effect, possible)
+        possible = list(possible)
         p.change_position(random.choice(possible))
 
 
@@ -108,9 +114,29 @@ def update_computers(t):
         p.update(t)
         do_AI(p)
 
+def update_bomb_effects(bomb):
+    for (axis, increment) in [[0, -1], [0, 1], [1, -1], [1, 1]]:
+        p = list(bomb.position)
+        for i in range(bomb.power, 0, -1):
+            p[axis] += increment
+            if not is_valid_position(p):
+                break
+            elif can_explosion_pass(p):
+                bomb_effects[p[0]][p[1]] += i
+            else:
+                break
+    bomb_effects[bomb.position[0]][bomb.position[1]] += bomb.power+1
+
+
 def update_bombs(t):
+    for i in range(len(bomb_effects)):
+        for j in  range(len(bomb_effects[0])):
+            bomb_effects[i][j] = 0
+
     for bomb in bombs.copy():
         bomb.update(t)
+        update_bomb_effects(bomb)
+
 
 def update_explosions(t):
     for e in explosions.copy():
