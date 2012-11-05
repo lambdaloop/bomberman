@@ -99,6 +99,13 @@ def do_AI(p):
             elif effect == max_effect:
                 possible.append(pos)
 
+    #check effect at current position
+    effect = bomb_effects[p.position[0]][p.position[1]]
+    if effect > max_effect:
+        return  # DON'T MOVE!
+    elif effect == max_effect:
+        possible.append(p.position)
+
     if possible != []:
         p.change_position(random.choice(possible))
 
@@ -150,6 +157,7 @@ def is_game_over():
     return len(computers)+len(humans)<=1
 
 def main_loop():
+    draw_stuff()
     while True:
         tickFPS = Clock.tick(fps)
         pressed = []
