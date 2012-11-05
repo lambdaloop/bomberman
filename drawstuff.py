@@ -37,7 +37,7 @@ def center_rect(rect):
     vert_center_rect(rect)
 
 def draw_menu_items(menu_screen, first_item_top=100, item_distance = 40):
-    font_path = 'coders_crux/GUBBLABLO.ttf'
+    font_path = 'fonts/GUBBLABLO.ttf'
     font = pygame.font.Font(font_path, 20)
     y = first_item_top
 
@@ -54,7 +54,7 @@ def draw_menu_items(menu_screen, first_item_top=100, item_distance = 40):
         y += rect.height + item_distance
 
 def draw_menu(menu_screen, background=True, first_item_top = 100, item_distance = 40):
-    font_path = 'coders_crux/GUBBLABLO.ttf'
+    font_path = 'fonts/GUBBLABLO.ttf'
     background_color = 15,15,15
     if background:
         screen.fill(background_color)
@@ -74,7 +74,7 @@ def draw_menu(menu_screen, background=True, first_item_top = 100, item_distance 
 def draw_text(text):
     text = text.upper()
     lines = text.split('\n')
-    font_path = 'coders_crux/Square.ttf'
+    font_path = 'fonts/Square.ttf'
     font = pygame.font.Font(font_path, 15)
     y = 60
 
@@ -149,8 +149,8 @@ sky_blue = 100,244,255
 nice_blue = 0,194,255
 
 def draw_game_over():
-    font_path = 'coders_crux/GUBBLO___.ttf'
-#    font_path = 'coders_crux/Square.ttf'
+    font_path = 'fonts/GUBBLO___.ttf'
+#    font_path = 'fonts/Square.ttf'
     font_size = 20
 
     game_over_font = pygame.font.Font(font_path, font_size*2)
