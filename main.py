@@ -96,7 +96,7 @@ def do_AI(p):
             if(possible == [] or effect > max_effect):
                 max_effect = effect
                 possible = [pos]
-            else:
+            elif effect == max_effect:
                 possible.append(pos)
 
     if possible != []:
