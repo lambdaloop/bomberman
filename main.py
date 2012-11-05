@@ -1,4 +1,10 @@
-import sys, pygame
+import sys
+import os
+
+if len(sys.argv)>=1 and sys.argv[0] and os.path.dirname(sys.argv[0]):
+    os.chdir(os.path.dirname(sys.argv[0]))
+
+import pygame
 import random #for AI
 
 from bomber_constants import *
