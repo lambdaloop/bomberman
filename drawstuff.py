@@ -32,37 +32,42 @@ def horiz_center_rect(rect):
 def vert_center_rect(rect):
     rect.top = height/2 - rect.height/2
 
+def center_rect(rect):
+    horiz_center_rect(rect)
+    vert_center_rect(rect)
+
 def draw_menu(menu_screen):
     font_path = 'coders_crux/GUBBLABLO.ttf'
     font = pygame.font.Font(font_path, 20)
     font_color = (255, 255, 153)
-    places = ((100, 100), (100, 175), (100, 250), (100, 325))
+#    places = ((100, 100), (100, 175), (100, 250), (100, 325))
+    y = 100
+    item_distance = 50
     width_height = (250, 50)
-    background_color = (17, 17, 17)
+    background_color = 15,15,15
     screen.fill(background_color)
 
     #draw title
     title_font = pygame.font.Font(font_path, 40)
-    title = title_font.render("BOMBERSQUARE", True, (220, 36, 43))
+    title = title_font.render("BOMBERSQUARE", True, nice_red)
     title_rect = title.get_rect().move((100, 20))
     horiz_center_rect(title_rect)
     screen.blit(title, title_rect)
 
     for i in range(menu_screen.length):
-        # rect = pygame.Rect(places[i], width_height)
-        # horiz_center_rect(rect)
         if menu_screen.selector == i:
-            surface = font.render(menu_screen.choices[i].upper(), True, black)
+            surface = font.render(menu_screen.choices[i].upper(), True, black, nice_blue)
         else:
             surface = font.render(menu_screen.choices[i].upper(), True, white)
         rect = surface.get_rect()
-        rect.top = places[i][1]
+        rect.top = y
         horiz_center_rect(rect)
-        if menu_screen.selector == i:
-            highlight = pygame.Surface(surface.get_size())
-            highlight.fill(light_green)
-            screen.blit(highlight, rect)
+        # if menu_screen.selector == i:
+        #     highlight = pygame.Surface(surface.get_size())
+        #     highlight.fill(light_green)
+        #     screen.blit(highlight, rect)
         screen.blit(surface, rect)
+        y += rect.height + item_distance
     pygame.display.flip()
 
 def draw_player(p):
@@ -121,14 +126,40 @@ red = 255,0,0
 green = 0,255,0
 blue = 0,0,255
 chartreuse = 127,255,0
-light_green = 0,255,107
+light_green = 131,255,100
+nice_red = 207,45,64
+sky_blue = 100,244,255
+nice_blue = 0,194,255
 
 def draw_game_over():
-    font_path = 'coders_crux/coders_crux.ttf'
-    font = pygame.font.Font(font_path, 64)
-    game_over_text = font.render("GAME OVER", True, black)
-    rect = pygame.Rect((100, 100), (200, 30))
-    screen.blit(game_over_text, rect)
+    font_path = 'coders_crux/GUBBLO___.ttf'
+    font_size = 20
+    # white_surface = pygame.Surface((370, 240))
+    # white_surface.fill(white)
+    # rect = white_surface.get_rect()
+    # center_rect(rect)
+    # screen.blit(white_surface, rect)
+
+    game_over_font = pygame.font.Font(font_path, font_size*2)
+    other_font = pygame.font.Font(font_path, font_size)
+
+    y = height/2 - game_over_font.get_height()/2 - other_font.get_height()/2 * 2
+
+    game_over_text = game_over_font.render("GAME OVER", True, black, white)
+    game_over_rect = pygame.Rect((y, 150), game_over_text.get_size())
+    horiz_center_rect(game_over_rect)
+    screen.blit(game_over_text, game_over_rect)
+
+
+    space_text = other_font.render("Press <space> to restart.", True, black, white)
+    space_rect = space_text.get_rect().move([0, game_over_rect.bottom])
+    horiz_center_rect(space_rect)
+    screen.blit(space_text, space_rect)
+
+    esc_text = other_font.render("Press <esc> for main menu.", True, black, white)
+    esc_rect = esc_text.get_rect().move([0, space_rect.bottom])
+    horiz_center_rect(esc_rect)
+    screen.blit(esc_text, esc_rect)
 
 
 def draw_stuff(game_over=False):

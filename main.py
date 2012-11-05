@@ -94,7 +94,7 @@ def do_AI(p):
              not isinstance(get_object(pos), Bomb):
             effect = bomb_effects[pos[0]][pos[1]]
             if(possible == [] or effect > max_effect):
-                min_effect = effect
+                max_effect = effect
                 possible = [pos]
             else:
                 possible.append(pos)
@@ -147,7 +147,7 @@ def update_stuff(t):
     update_computers(t)
 
 def is_game_over():
-    return len(humans)<=0
+    return len(computers) == 0+len(humans)<=1
 
 def main_loop():
     while True:
@@ -173,20 +173,17 @@ def main_loop():
         update_stuff(tickFPS)
         draw_stuff(game_over=is_game_over())
 
-def draw_game_over_text():
-    font_path = 'coders_crux/coders_crux.ttf'
-    font = pygame.font.Font(font_path, 64)
-    game_over_text = font.render("GAME OVER", True, black)
-    rect = pygame.Rect((100, 100), (200, 30))
-    screen.blit(game_over_text, rect)
-
-
 
 while True:
     game_params = game_menu()
+    if 'quit' in game_params:
+        break
+
     init_normal_game(game_params)
     reset_game()
     main_loop()
 #    game_over()
 
     reset_game()
+
+sys.exit(0)
