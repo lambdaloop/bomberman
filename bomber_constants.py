@@ -16,6 +16,7 @@ mapW, mapH = 15,13
 size = width, height = blockW*mapW, blockH*mapH
 
 screen = pygame.display.set_mode(size)
+pygame.display.set_caption("Bombersquare")
 
 Clock = pygame.time.Clock()
 fps = 60

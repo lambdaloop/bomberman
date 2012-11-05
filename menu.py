@@ -88,6 +88,10 @@ Bombersquare 1.0
 DEVELOPERS
 Pierre Karashchuk
 Steven Yang
+
+FONTS USED
+Gubblebum by Tjarda Koster
+SquareFont by Bou Fonts
 """
 
 controls_text = \
