@@ -1,6 +1,6 @@
 import sys, pygame
 import random #for AI
-#import spritesheet
+
 from bomber_constants import *
 from player import *
 from bombermap import *
@@ -190,8 +190,6 @@ while True:
     init_normal_game(game_params)
     reset_game()
     main_loop()
-#    game_over()
-
     reset_game()
 
 sys.exit(0)

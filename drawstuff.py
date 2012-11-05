@@ -40,7 +40,6 @@ def draw_menu(menu_screen):
     font_path = 'coders_crux/GUBBLABLO.ttf'
     font = pygame.font.Font(font_path, 20)
     font_color = (255, 255, 153)
-#    places = ((100, 100), (100, 175), (100, 250), (100, 325))
     y = 100
     item_distance = 50
     width_height = (250, 50)
@@ -62,10 +61,6 @@ def draw_menu(menu_screen):
         rect = surface.get_rect()
         rect.top = y
         horiz_center_rect(rect)
-        # if menu_screen.selector == i:
-        #     highlight = pygame.Surface(surface.get_size())
-        #     highlight.fill(light_green)
-        #     screen.blit(highlight, rect)
         screen.blit(surface, rect)
         y += rect.height + item_distance
     pygame.display.flip()
@@ -134,11 +129,6 @@ nice_blue = 0,194,255
 def draw_game_over():
     font_path = 'coders_crux/GUBBLO___.ttf'
     font_size = 20
-    # white_surface = pygame.Surface((370, 240))
-    # white_surface.fill(white)
-    # rect = white_surface.get_rect()
-    # center_rect(rect)
-    # screen.blit(white_surface, rect)
 
     game_over_font = pygame.font.Font(font_path, font_size*2)
     other_font = pygame.font.Font(font_path, font_size)

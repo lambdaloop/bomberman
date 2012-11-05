@@ -11,7 +11,6 @@ class Menu_screen:
         self.choices = choices
         self.links = {}
         self.selector = 0
-#        self.num_humans = num_humans
         self.length = len(choices)
         self.parameters = parameters
         self.param_updates = param_updates
@@ -21,13 +20,6 @@ class Menu_screen:
         m_s.links["Back"] = self
 
     def select(self):
-#         selected = self.choices[self.selector]
-#         if selected in self.links:
-#             link = self.links[selected]
-# #            if isinstance(link, Menu_screen):
-# #                return link
-#         #init_normal_game(self.num_humans, int(selected[0]))
-#         return selected
         d = self.param_updates[self.selector]
         self.parameters.update(d)
 
@@ -77,15 +69,20 @@ def run_menu(m):
             m.menu_display()
 
 
+
 def game_menu():
     root = Menu_screen(["0 humans", "1 human", "2 humans", "Quit"],
-                       param_updates=[{'num_humans':0}, {'num_humans': 1}, {'num_humans':2}, {'quit': True}])
+                       param_updates=[{'num_humans':0}, {'num_humans': 1},
+                                      {'num_humans':2}, {'quit': True}])
     root_0 = Menu_screen(["1 computer", "2 computers", "3 computers", "4 computers", "Back"],
-                         param_updates=[{'num_computers': 1},{'num_computers': 2},{'num_computers': 3}, {'num_computers': 4},{}])
+                         param_updates=[{'num_computers': 1},{'num_computers': 2},
+                                        {'num_computers': 3},{'num_computers': 4},{}])
     root_1 = Menu_screen(["1 computer", "2 computers", "3 computers", "Back"],
-                         param_updates=[{'num_computers': 1},{'num_computers': 2},{'num_computers': 3},{}])
+                         param_updates=[{'num_computers': 1},{'num_computers': 2},
+                                        {'num_computers': 3},{}])
     root_2 = Menu_screen(["0 computers", "1 computer", "2 computers", "Back"],
-                         param_updates=[{'num_computers': 0}, {'num_computers': 1},{'num_computers': 2},{}])
+                         param_updates=[{'num_computers': 0}, {'num_computers': 1},
+                                        {'num_computers': 2},{}])
 
     root.links["Quit"] = None
     root.link("0 humans", root_0)

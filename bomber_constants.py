@@ -26,8 +26,6 @@ repeat_key_wait = 1000
 player_move_delay = 150
 computer_move_delay = 300
 
-#main_player = None
-
 key1_us_to_dir = {
         pygame.constants.K_w: Direction.up,
         pygame.constants.K_s: Direction.down,
