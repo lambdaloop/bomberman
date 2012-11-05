@@ -147,7 +147,7 @@ def update_stuff(t):
     update_computers(t)
 
 def is_game_over():
-    return len(computers) == 0+len(humans)<=1
+    return len(computers)+len(humans)<=1
 
 def main_loop():
     while True:
