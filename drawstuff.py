@@ -26,27 +26,42 @@ def get_rect(pos):
     rect.left, rect.top = pos_to_pixel(pos)
     return rect
 
+def horiz_center_rect(rect):
+    rect.left = width/2 - rect.width/2
+
+def vert_center_rect(rect):
+    rect.top = height/2 - rect.height/2
+
 def draw_menu(menu_screen):
-    font_path = 'coders_crux/coders_crux.ttf'
-    font = pygame.font.Font(font_path, 32)
+    font_path = 'coders_crux/GUBBLABLO.ttf'
+    font = pygame.font.Font(font_path, 20)
     font_color = (255, 255, 153)
     places = ((100, 100), (100, 175), (100, 250), (100, 325))
     width_height = (250, 50)
-    screen.fill(white)
+    background_color = (17, 17, 17)
+    screen.fill(background_color)
 
     #draw title
-    title_rect = pygame.Rect((100,20), width_height)
-    title_font = pygame.font.Font(font_path, 64)
-    title = title_font.render("Bombersquare", True, red)
+    title_font = pygame.font.Font(font_path, 40)
+    title = title_font.render("BOMBERSQUARE", True, (220, 36, 43))
+    title_rect = title.get_rect().move((100, 20))
+    horiz_center_rect(title_rect)
     screen.blit(title, title_rect)
 
-    for i in range(menu_screen.length):  
-        rect = pygame.Rect(places[i], width_height)
+    for i in range(menu_screen.length):
+        # rect = pygame.Rect(places[i], width_height)
+        # horiz_center_rect(rect)
         if menu_screen.selector == i:
-            highlight = green
+            surface = font.render(menu_screen.choices[i].upper(), True, black)
         else:
-            highlight = white
-        surface = font.render(menu_screen.choices[i], True, blue, highlight)
+            surface = font.render(menu_screen.choices[i].upper(), True, white)
+        rect = surface.get_rect()
+        rect.top = places[i][1]
+        horiz_center_rect(rect)
+        if menu_screen.selector == i:
+            highlight = pygame.Surface(surface.get_size())
+            highlight.fill(light_green)
+            screen.blit(highlight, rect)
         screen.blit(surface, rect)
     pygame.display.flip()
 
@@ -102,15 +117,27 @@ def draw_players():
 
 white = 255,255,255
 black = 0,0,0
+red = 255,0,0
 green = 0,255,0
 blue = 0,0,255
-red = 255,0,0
+chartreuse = 127,255,0
+light_green = 0,255,107
 
-def draw_stuff():
+def draw_game_over():
+    font_path = 'coders_crux/coders_crux.ttf'
+    font = pygame.font.Font(font_path, 64)
+    game_over_text = font.render("GAME OVER", True, black)
+    rect = pygame.Rect((100, 100), (200, 30))
+    screen.blit(game_over_text, rect)
+
+
+def draw_stuff(game_over=False):
     screen.fill(white)
     draw_map()
     draw_powerups()
     draw_bombs()
     draw_players()
     draw_explosions()
+    if game_over:
+        draw_game_over()
     pygame.display.flip()
