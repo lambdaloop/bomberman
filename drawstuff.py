@@ -36,15 +36,28 @@ def center_rect(rect):
     horiz_center_rect(rect)
     vert_center_rect(rect)
 
-def draw_menu(menu_screen):
+def draw_menu_items(menu_screen, first_item_top=100, item_distance = 40):
     font_path = 'coders_crux/GUBBLABLO.ttf'
     font = pygame.font.Font(font_path, 20)
-    font_color = (255, 255, 153)
-    y = 100
-    item_distance = 50
-    width_height = (250, 50)
+    y = first_item_top
+
+    for i in range(menu_screen.length):
+        text = menu_screen.choices[i].upper()
+        if menu_screen.selector == i:
+            surface = font.render(text, True, black, nice_blue)
+        else:
+            surface = font.render(text, True, white)
+        rect = surface.get_rect()
+        rect.top = y
+        horiz_center_rect(rect)
+        screen.blit(surface, rect)
+        y += rect.height + item_distance
+
+def draw_menu(menu_screen, background=True, first_item_top = 100, item_distance = 40):
+    font_path = 'coders_crux/GUBBLABLO.ttf'
     background_color = 15,15,15
-    screen.fill(background_color)
+    if background:
+        screen.fill(background_color)
 
     #draw title
     title_font = pygame.font.Font(font_path, 40)
@@ -53,17 +66,26 @@ def draw_menu(menu_screen):
     horiz_center_rect(title_rect)
     screen.blit(title, title_rect)
 
-    for i in range(menu_screen.length):
-        if menu_screen.selector == i:
-            surface = font.render(menu_screen.choices[i].upper(), True, black, nice_blue)
-        else:
-            surface = font.render(menu_screen.choices[i].upper(), True, white)
+    draw_menu_items(menu_screen, first_item_top, item_distance)
+
+    pygame.display.flip()
+
+
+def draw_text(text):
+    text = text.upper()
+    lines = text.split('\n')
+    font_path = 'coders_crux/Square.ttf'
+    font = pygame.font.Font(font_path, 15)
+    y = 60
+
+    for line in lines:
+        surface = font.render(line, True, white)
         rect = surface.get_rect()
         rect.top = y
         horiz_center_rect(rect)
         screen.blit(surface, rect)
-        y += rect.height + item_distance
-    pygame.display.flip()
+        y += rect.height + 5
+    return y
 
 def draw_player(p):
     rect = get_rect(p.position)
@@ -128,6 +150,7 @@ nice_blue = 0,194,255
 
 def draw_game_over():
     font_path = 'coders_crux/GUBBLO___.ttf'
+#    font_path = 'coders_crux/Square.ttf'
     font_size = 20
 
     game_over_font = pygame.font.Font(font_path, font_size*2)
@@ -141,12 +164,12 @@ def draw_game_over():
     screen.blit(game_over_text, game_over_rect)
 
 
-    space_text = other_font.render("Press <space> to restart.", True, black, white)
+    space_text = other_font.render("PRESS [SPACE] TO RESTART.", True, black, white)
     space_rect = space_text.get_rect().move([0, game_over_rect.bottom])
     horiz_center_rect(space_rect)
     screen.blit(space_text, space_rect)
 
-    esc_text = other_font.render("Press <esc> for main menu.", True, black, white)
+    esc_text = other_font.render("PRESS [ESC] FOR MAIN MENU.", True, black, white)
     esc_rect = esc_text.get_rect().move([0, space_rect.bottom])
     horiz_center_rect(esc_rect)
     screen.blit(esc_text, esc_rect)
