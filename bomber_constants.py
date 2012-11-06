@@ -10,7 +10,8 @@ class BlockType:
 class PowerupType:
         extraBomb, bombPower = range(2)
 
-blockW, blockH = 32, 32
+scale = 1.5
+blockW, blockH = int(32*scale),int(32*scale)
 mapW, mapH = 15,13
 
 size = width, height = blockW*mapW, blockH*mapH
@@ -25,7 +26,7 @@ map_key = {'w' : BlockType.wall, ' ' : BlockType.blank, '-' : BlockType.brick}
 
 repeat_key_wait = 1000
 player_move_delay = 150
-computer_move_delay = 300
+computer_move_delay = 200 #300
 
 key1_us_to_dir = {
         pygame.constants.K_w: Direction.up,

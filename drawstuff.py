@@ -2,18 +2,30 @@ import pygame
 from bomber_constants import *
 from bombermap import *
 
+block_size = (blockW, blockH)
+
+def scale_image(img, size = block_size):
+    return pygame.transform.scale(img, size)
+
 player_image = pygame.image.load('img/player.png')
 computer_image = pygame.image.load('img/computer.png')
 bomb_image = pygame.image.load('img/squarebomb.png')
 explosion_image = pygame.image.load('img/explosion.png')
 
+player_image = scale_image(player_image, block_size)
+computer_image = scale_image(computer_image, block_size)
+bomb_image = scale_image(bomb_image, block_size)
+explosion_image = scale_image(explosion_image, block_size)
+
 powerup_images = ['img/powerup_extrabombs.png', 'img/powerup_extrapower.png']
 for i in range(len(powerup_images)):
     powerup_images[i] = pygame.image.load(powerup_images[i])
+    powerup_images[i] = scale_image(powerup_images[i])
 
 block_images = [None, 'img/wall.png', 'img/brick.png']
 for i in range(1, len(block_images)):
     block_images[i] = pygame.image.load(block_images[i])
+    block_images[i] = scale_image(block_images[i])
 
 
 standard_rect = pygame.Rect(0, 0, blockW, blockH)
@@ -38,7 +50,7 @@ def center_rect(rect):
 
 def draw_menu_items(menu_screen, first_item_top=100, item_distance = 40):
     font_path = 'fonts/GUBBLABLO.ttf'
-    font = pygame.font.Font(font_path, 20)
+    font = pygame.font.Font(font_path, int(20*scale))
     y = first_item_top
 
     for i in range(menu_screen.length):
@@ -53,14 +65,14 @@ def draw_menu_items(menu_screen, first_item_top=100, item_distance = 40):
         screen.blit(surface, rect)
         y += rect.height + item_distance
 
-def draw_menu(menu_screen, background=True, first_item_top = 100, item_distance = 40):
+def draw_menu(menu_screen, background=True, first_item_top = 100*scale, item_distance = 40*scale):
     font_path = 'fonts/GUBBLABLO.ttf'
     background_color = 15,15,15
     if background:
         screen.fill(background_color)
 
     #draw title
-    title_font = pygame.font.Font(font_path, 40)
+    title_font = pygame.font.Font(font_path, int(40*scale))
     title = title_font.render("BOMBERSQUARE", True, nice_red)
     title_rect = title.get_rect().move((100, 20))
     horiz_center_rect(title_rect)
@@ -71,12 +83,11 @@ def draw_menu(menu_screen, background=True, first_item_top = 100, item_distance 
     pygame.display.flip()
 
 
-def draw_text(text):
+def draw_text(text, y=60*scale):
     text = text.upper()
     lines = text.split('\n')
     font_path = 'fonts/Square.ttf'
     font = pygame.font.Font(font_path, 15)
-    y = 60
 
     for line in lines:
         surface = font.render(line, True, white)
@@ -151,7 +162,7 @@ nice_blue = 0,194,255
 def draw_game_over():
     font_path = 'fonts/GUBBLO___.ttf'
 #    font_path = 'fonts/Square.ttf'
-    font_size = 20
+    font_size = int(20*scale)
 
     game_over_font = pygame.font.Font(font_path, font_size*2)
     other_font = pygame.font.Font(font_path, font_size)
