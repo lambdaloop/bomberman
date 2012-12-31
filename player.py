@@ -14,7 +14,11 @@ class Player:
         self.bombinv = max_bombs
         self.alive = True
         self.num = num
-        self.repeat_move_delay = 0
+        if self.computer:
+            self.repeat_move_delay = computer_move_delay
+        else:
+            self.repeat_move_delay = 0
+
 
     def reset(self):
         self.max_bombs = 1
@@ -22,7 +26,10 @@ class Player:
         self.bombinv = self.max_bombs
         self.alive = True
         self.position = self.start_position
-        self.repeat_move_delay = 0
+        if self.computer:
+            self.repeat_move_delay = computer_move_delay
+        else:
+            self.repeat_move_delay = 0
 
     def update(self, time):
         obj = get_object(self.position)
@@ -39,7 +46,7 @@ class Player:
         if self.repeat_move_delay > 0:
             return
 
-        if not can_move(new_position):
+        if not can_move(new_position) or new_position == self.position:
             return
 
         if isinstance(get_object(self.position), Player):

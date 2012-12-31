@@ -1,6 +1,12 @@
-import sys, pygame
+import sys
+import os
+
+if len(sys.argv)>=1 and sys.argv[0] and os.path.dirname(sys.argv[0]):
+    os.chdir(os.path.dirname(sys.argv[0]))
+
+import pygame
 import random #for AI
-#import spritesheet
+
 from bomber_constants import *
 from player import *
 from bombermap import *
@@ -94,10 +100,17 @@ def do_AI(p):
              not isinstance(get_object(pos), Bomb):
             effect = bomb_effects[pos[0]][pos[1]]
             if(possible == [] or effect > max_effect):
-                min_effect = effect
+                max_effect = effect
                 possible = [pos]
-            else:
+            elif effect == max_effect:
                 possible.append(pos)
+
+    #check effect at current position
+    effect = bomb_effects[p.position[0]][p.position[1]]
+    if effect > max_effect:
+        return  # DON'T MOVE!
+    elif effect == max_effect:
+        possible.append(p.position)
 
     if possible != []:
         p.change_position(random.choice(possible))
@@ -147,9 +160,10 @@ def update_stuff(t):
     update_computers(t)
 
 def is_game_over():
-    return len(humans)<=0
+    return len(computers)+len(humans)<=1
 
 def main_loop():
+    draw_stuff()
     while True:
         tickFPS = Clock.tick(fps)
         pressed = []
@@ -173,20 +187,15 @@ def main_loop():
         update_stuff(tickFPS)
         draw_stuff(game_over=is_game_over())
 
-def draw_game_over_text():
-    font_path = 'coders_crux/coders_crux.ttf'
-    font = pygame.font.Font(font_path, 64)
-    game_over_text = font.render("GAME OVER", True, black)
-    rect = pygame.Rect((100, 100), (200, 30))
-    screen.blit(game_over_text, rect)
-
-
 
 while True:
     game_params = game_menu()
+    if 'quit' in game_params:
+        break
+
     init_normal_game(game_params)
     reset_game()
     main_loop()
-#    game_over()
-
     reset_game()
+
+sys.exit(0)
