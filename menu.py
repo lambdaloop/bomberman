@@ -41,7 +41,7 @@ class Menu_screen:
 
 class Text_Menu_screen(Menu_screen):
     def __init__(self, text, choices=["Back"], param_updates=[{}], parameters={}):
-        super(Text_Menu_screen, self).__init__(choices, param_updates, parameters)
+        Menu_screen.__init__(self, choices, param_updates, parameters)
         self.text = text
     def menu_display(self):
         screen.fill((15,15,15))
